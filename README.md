@@ -38,3 +38,13 @@ This is a standard Maven project, you can run it from your IDE, or using the pro
 ```bash
 ./mvnw spring-boot:run
 ```
+
+
+## Running in ASA-E instance
+- create a builder with java-native-image
+- create postgres flexible server
+- create an app and configure [service connector](https://learn.microsoft.com/en-us/azure/developer/java/spring-framework/configure-spring-data-jdbc-with-azure-postgresql?tabs=passwordless%2Cservice-connector&pivots=postgresql-passwordless-flexible-server)
+- deploy app
+```shell
+az spring app deploy -n test --source-path . --build-cpu 4 --build-memory 8Gi --builder native --build-env BP_NATIVE_IMAGE=true BP_JVM_VERSION=17 BP_NATIVE_IMAGE_BUILD_ARGUMENTS="--no-fallback -H:ReflectionConfigurationFiles=/workspace/META-INF/native-image/reflect-config.json"
+```
